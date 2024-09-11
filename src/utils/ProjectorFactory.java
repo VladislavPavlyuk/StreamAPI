@@ -1,6 +1,4 @@
-package stream.models.utils;
-import java.util.*;
-import java.util.stream.Collectors;
+package utils;
 
 import stream.models.Projector;
 

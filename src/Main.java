@@ -1,12 +1,8 @@
 
-import stream.models.Device;
 import stream.models.Food;
 import stream.models.RandomNumbers;
-import stream.models.utils.DeviceFactory;
-import stream.models.utils.ProjectorFactory;
-
-import java.util.Arrays;
-import java.util.List;
+import utils.DeviceFactory;
+import utils.ProjectorFactory;
 
 public class Main {
     public static void main(String[] args) {

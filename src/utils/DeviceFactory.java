@@ -1,4 +1,4 @@
-package stream.models.utils;
+package utils;
 
 import stream.models.Device;
 
