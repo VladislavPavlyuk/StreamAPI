@@ -1,6 +1,4 @@
 package stream.models;
-import java.util.*;
-import java.util.stream.Collectors;
 
 public class Projector {
     private String name;

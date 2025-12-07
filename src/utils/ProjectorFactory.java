@@ -5,9 +5,12 @@ import stream.models.Projector;
 import java.util.Arrays;
 import java.util.Comparator;
 import java.util.List;
+import java.util.Random;
 
 
 public  class ProjectorFactory {
+
+        private static final Random random = new Random();
 
         List<Projector> projectors = Arrays.asList(
                 new Projector("Projector A", 2023, 500.0, "Manufacturer X"),
@@ -69,5 +72,22 @@ public  class ProjectorFactory {
                 projectors.stream()
                         .sorted(Comparator.comparingInt(Projector::getYear).reversed())
                         .forEach(System.out::println);
+        }
+
+        /**
+         * Создает случайный проектор из набора
+         * @return случайный проектор
+         */
+        public Projector createRandomProjector() {
+                return projectors.get(random.nextInt(projectors.size()));
+        }
+
+        /**
+         * Статический метод для создания случайного проектора
+         * @return случайный проектор
+         */
+        public static Projector getRandomProjector() {
+                ProjectorFactory factory = new ProjectorFactory();
+                return factory.createRandomProjector();
         }
 }

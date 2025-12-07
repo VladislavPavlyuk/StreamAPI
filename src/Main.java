@@ -47,6 +47,12 @@ public class Main {
         projects.showAllSortedByYearAccent();
         projects.showAllSortedByPriceAccent();
         projects.showAllSortedByPriceDeccent();
+        
+        System.out.println("\n=== ProjectorFactory - Случайные проекторы ===");
+        System.out.println("Случайные проекторы:");
+        for (int i = 0; i < 3; i++) {
+            System.out.println("Проектор " + (i + 1) + ": " + projects.createRandomProjector());
+        }
 
     }
 }
