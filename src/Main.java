@@ -31,6 +31,12 @@ public class Main {
         devices.showAllByExpensiveThan(200);
         devices.showAllByType("Phone");
         devices.showAllByYears(2019,2020);
+        
+        System.out.println("\n=== DeviceFactory - Случайные устройства ===");
+        System.out.println("Случайные устройства:");
+        for (int i = 0; i < 3; i++) {
+            System.out.println("Устройство " + (i + 1) + ": " + devices.createRandomDevice());
+        }
 
         ProjectorFactory projects = new ProjectorFactory();
         projects.showAll();

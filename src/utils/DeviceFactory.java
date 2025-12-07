@@ -4,9 +4,11 @@ import stream.models.Device;
 
 import java.util.Arrays;
 import java.util.List;
+import java.util.Random;
 
 public class DeviceFactory {
 
+    private static final Random random = new Random();
 
     protected List<Device> devices = Arrays.asList(
             new Device("Device1", 2020, 299.99, "Red", "Phone"),
@@ -15,6 +17,23 @@ public class DeviceFactory {
             new Device("Device4", 2018, 199.99, "Green", "Phone"),
             new Device("Device5", 2020, 299.99, "Blue", "Laptop")
     );
+
+    /**
+     * Создает случайное устройство из набора
+     * @return случайное устройство
+     */
+    public Device createRandomDevice() {
+        return devices.get(random.nextInt(devices.size()));
+    }
+
+    /**
+     * Статический метод для создания случайного устройства
+     * @return случайное устройство
+     */
+    public static Device getRandomDevice() {
+        DeviceFactory factory = new DeviceFactory();
+        return factory.createRandomDevice();
+    }
 
     public void showAll() {    // Показать все устройства
         System.out.println("All devices:");
