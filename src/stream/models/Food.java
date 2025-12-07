@@ -3,9 +3,9 @@ package stream.models;
 import java.util.*;
 
 public class Food {
-    private final List<String> products;
+    private final List<FoodItem> products;
     
-    public Food(List<String> products) {
+    public Food(List<FoodItem> products) {
         this.products = products;
     }
 
@@ -17,7 +17,7 @@ public class Food {
     public void showAllLessFive() {        // Показать все продукты с названием меньше пяти символов
         System.out.println("\nПродукты с названием меньше пяти символов:");
         products.stream()
-                .filter(product -> product.length() < 5)
+                .filter(product -> product.getTitle().length() < 5)
                 .forEach(System.out::println);
     }
 
@@ -39,10 +39,11 @@ public class Food {
     
     public void showAllRepeating(String inputProduct) {        // Посчитать сколько раз встречается продукт
         long count = products.stream()
-                .filter(product -> product.equalsIgnoreCase(inputProduct))
+                .filter(product -> product.getTitle().equalsIgnoreCase(inputProduct))
                 .count();
         System.out.println("Продукт \"" + inputProduct + "\" встречается " + count + " раз.");
     }
+    
     public void showAllStaredOn() {        // Показать все продукты, которые начинаются на заданную букву
         try (Scanner scanner = new Scanner(System.in)) {
             System.out.print("\nВведите начальную букву: ");
@@ -65,15 +66,15 @@ public class Food {
     public void showAllStaredOn(char initial) {        // Показать все продукты, которые начинаются на заданную букву
         System.out.println("Продукты, начинающиеся на букву \"" + initial + "\":");
         products.stream()
-                .filter(product -> product.charAt(0) == initial)
+                .filter(product -> product.getTitle().charAt(0) == initial)
                 .forEach(System.out::println);
     }
 
     public void showAllMilk(){
-        // Показать все продукты из категории «Молоко»
-        System.out.println("\nПродукты из категории «Молоко»:");
+        // Показать все продукты из категории «Молочные»
+        System.out.println("\nПродукты из категории «Молочные»:");
         products.stream()
-                .filter(product -> product.equalsIgnoreCase("Молоко"))
+                .filter(product -> product.getCategory().equalsIgnoreCase("Молочные"))
                 .forEach(System.out::println);
     }
 }

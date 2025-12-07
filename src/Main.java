@@ -24,7 +24,6 @@ public class Main {
         System.out.println("\n\nCreating RandomNumbers via factory:");
         RandomNumbers testNumbers = RandomNumbersFactory.createRandomNumbers(50);
         testNumbers.print();
-        waitForEnter();
 
         System.out.println("\n\nCreating Food via factory:");
         Food food = FoodFactory.createFood(50);
@@ -34,7 +33,7 @@ public class Main {
         food.showAllRepeating();
         food.showAllMilk();
 
-
+        System.out.println("\n\nCreating Devices via factory:");
         DeviceFactory devices = new DeviceFactory();
         devices.showAll();
         devices.showAllByYear(2020);

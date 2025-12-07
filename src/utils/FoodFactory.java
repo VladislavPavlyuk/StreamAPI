@@ -1,37 +1,55 @@
 package utils;
 
 import stream.models.Food;
+import stream.models.FoodItem;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
-import java.util.Random;
+import java.util.*;
 
 public class FoodFactory {
     
-    private static final List<String> productTemplates = Arrays.asList(
-            "Молоко", "Хлеб", "Сыр", "Яблоко", "Кефир", "Масло",
-            "Творог", "Йогурт", "Сметана", "Колбаса", "Мясо", "Рыба", "Курица",
-            "Картофель", "Морковь", "Лук", "Помидор", "Огурец", "Капуста",
-            "Бананы", "Апельсины", "Груши", "Виноград", "Клубника", "Малина",
-            "Рис", "Гречка", "Макароны", "Овсянка", "Манка", "Перловка",
-            "Сахар", "Соль", "Перец", "Мука", "Дрожжи", "Яйца",
-            "Мед", "Орехи", "Изюм", "Чернослив", "Финики", "Инжир",
-            "Чай", "Кофе", "Сок", "Вода", "Лимонад", "Компот", "Квас"
-    );
+    private static final Map<String, List<String>> productsByCategory = new HashMap<>();
+    
+    static {
+        productsByCategory.put("Молочные", Arrays.asList("Молоко", "Кефир", "Творог", "Йогурт", "Сметана", "Сыр", "Масло"));
+        productsByCategory.put("Хлебобулочные", Arrays.asList("Хлеб", "Булочка", "Батон", "Багет", "Круассан", "Пирог", "Пончик"));
+        productsByCategory.put("Бакалея", Arrays.asList("Рис", "Гречка", "Макароны", "Овсянка", "Манка", "Перловка", "Сахар", "Соль", "Перец", "Мука", "Дрожжи"));
+        productsByCategory.put("Мясные", Arrays.asList("Мясо", "Колбаса", "Сосиски", "Ветчина", "Бекон", "Сало", "Пельмени"));
+        productsByCategory.put("Рыба", Arrays.asList("Рыба", "Креветки", "Кальмары", "Икра", "Краб", "Мидии", "Тунец"));
+        productsByCategory.put("Птица", Arrays.asList("Курица", "Индейка", "Утка", "Гусь", "Яйца"));
+        productsByCategory.put("Овощи", Arrays.asList("Картофель", "Морковь", "Лук", "Помидор", "Огурец", "Капуста", "Перец", "Баклажан", "Кабачок", "Тыква"));
+        productsByCategory.put("Фрукты", Arrays.asList("Яблоко", "Бананы", "Апельсины", "Груши", "Виноград", "Клубника", "Малина", "Черника", "Вишня", "Слива"));
+        productsByCategory.put("Консервы", Arrays.asList("Тушенка", "Рыбные консервы", "Овощные консервы", "Фруктовые консервы", "Сгущенка", "Паштет"));
+        productsByCategory.put("Сладости", Arrays.asList("Мед", "Орехи", "Изюм", "Чернослив", "Финики", "Инжир", "Шоколад", "Печенье", "Конфеты"));
+        productsByCategory.put("Напитки", Arrays.asList("Чай", "Кофе", "Сок", "Вода", "Лимонад", "Компот", "Квас", "Морс", "Газировка"));
+    }
     
     private static final Random random = new Random();
     
     /**
-     * Generates a list of random products
+     * Generates a list of random food items grouped by categories
      * @param size number of products to generate
-     * @return list of random products
+     * @return list of random food items
      */
-    public static List<String> generateProducts(int size) {
-        List<String> products = new ArrayList<>();
-        for (int i = 0; i < size; i++) {
-            products.add(productTemplates.get(random.nextInt(productTemplates.size())));
+    public static List<FoodItem> generateProducts(int size) {
+        List<FoodItem> products = new ArrayList<>();
+        List<String> categories = new ArrayList<>(productsByCategory.keySet());
+        
+        // Ensure products are distributed across categories
+        int productsPerCategory = size / categories.size();
+        int remainder = size % categories.size();
+        
+        for (String category : categories) {
+            List<String> categoryProducts = productsByCategory.get(category);
+            int count = productsPerCategory + (remainder-- > 0 ? 1 : 0);
+            
+            for (int i = 0; i < count && products.size() < size; i++) {
+                String productName = categoryProducts.get(random.nextInt(categoryProducts.size()));
+                products.add(new FoodItem(productName, category));
+            }
         }
+        
+        // Shuffle to randomize order
+        Collections.shuffle(products);
         return products;
     }
     
@@ -53,19 +71,21 @@ public class FoodFactory {
     }
     
     /**
-     * Returns a random product name from the templates
+     * Returns a random product name from all categories
      * @return random product name
      */
     public static String getRandomProduct() {
-        return productTemplates.get(random.nextInt(productTemplates.size()));
+        List<String> allCategories = new ArrayList<>(productsByCategory.keySet());
+        String randomCategory = allCategories.get(random.nextInt(allCategories.size()));
+        List<String> categoryProducts = productsByCategory.get(randomCategory);
+        return categoryProducts.get(random.nextInt(categoryProducts.size()));
     }
     
     /**
-     * Returns a random product name from the templates (non-static method)
+     * Returns a random product name from all categories (non-static method)
      * @return random product name
      */
     public String createProduct() {
         return getRandomProduct();
     }
 }
-
