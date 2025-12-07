@@ -1,6 +1,7 @@
 package stream.models;
 
 import java.util.Random;
+import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 
 public class RandomNumbers {
@@ -36,7 +37,12 @@ public class RandomNumbers {
             System.out.println("Количество положительных: " + positiveCount);
             System.out.println("Количество отрицательных: " + negativeCount);
             System.out.println("Количество двухзначных: " + twoDigitCount);
-            System.out.println("Количество зеркальных чисел: " + mirroredCount);
+            
+            String mirroredNumbers = IntStream.of(numbers)
+                    .filter(RandomNumbers::isMirrored)
+                    .mapToObj(String::valueOf)
+                    .collect(Collectors.joining(", "));
+            System.out.println("Количество зеркальных чисел: " + mirroredCount + " (" + mirroredNumbers + ")");
         }
 
     private static boolean isMirrored(int number) {

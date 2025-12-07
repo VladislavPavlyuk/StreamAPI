@@ -4,12 +4,22 @@ import stream.models.RandomNumbers;
 import utils.DeviceFactory;
 import utils.FoodFactory;
 import utils.ProjectorFactory;
+import utils.RandomNumbersFactory;
 
 public class Main {
     public static void main(String[] args) {
 
         RandomNumbers randomNumbers = new RandomNumbers(100);
         randomNumbers.print();
+        
+        System.out.println("\n=== RandomNumbersFactory ===");
+        System.out.println("Случайные числа для тестирования:");
+        for (int i = 0; i < 10; i++) {
+            System.out.print(RandomNumbersFactory.generateRandomNumber() + " ");
+        }
+        System.out.println("\n\nСоздание RandomNumbers через фабрику:");
+        RandomNumbers testNumbers = RandomNumbersFactory.createRandomNumbers(50);
+        testNumbers.print();
 
         Food food = new Food();
         food.showAll();
