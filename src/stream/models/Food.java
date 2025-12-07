@@ -1,11 +1,13 @@
 package stream.models;
 
 import java.util.*;
-import java.util.stream.Collectors;
 
 public class Food {
-    public  Food() {}
-        List<String> products = Arrays.asList("Молоко", "Хлеб", "Сыр", "Яблоко", "Молоко", "Кефир", "Масло");
+    private final List<String> products;
+    
+    public Food(List<String> products) {
+        this.products = products;
+    }
 
     public void showAll() {        // Показать все продукты
         System.out.println("Все продукты:");
@@ -20,18 +22,47 @@ public class Food {
     }
 
     public void showAllRepeating() {        // Посчитать сколько раз встречается продукт, чье название ввёл пользователь
-        Scanner scanner = new Scanner(System.in);
-        System.out.print("\nВведите название продукта для подсчета, например Молоко: ");
-        String inputProduct = scanner.nextLine();
+        try (Scanner scanner = new Scanner(System.in)) {
+            System.out.print("\nВведите название продукта для подсчета, например Молоко: ");
+            String inputProduct = scanner.nextLine();
+            if (inputProduct.isEmpty()) {
+                System.out.println("Empty input provided, using default: Молоко");
+                showAllRepeating("Молоко");
+                return;
+            }
+            showAllRepeating(inputProduct);
+        } catch (NoSuchElementException e) {
+            System.out.println("\nInput unavailable, using default: Молоко");
+            showAllRepeating("Молоко");
+        }
+    }
+    
+    public void showAllRepeating(String inputProduct) {        // Посчитать сколько раз встречается продукт
         long count = products.stream()
                 .filter(product -> product.equalsIgnoreCase(inputProduct))
                 .count();
         System.out.println("Продукт \"" + inputProduct + "\" встречается " + count + " раз.");
     }
     public void showAllStaredOn() {        // Показать все продукты, которые начинаются на заданную букву
-        System.out.print("\nВведите начальную букву: ");
-        Scanner scanner = new Scanner(System.in);
-        char initial = scanner.nextLine().charAt(0);
+        try (Scanner scanner = new Scanner(System.in)) {
+            System.out.print("\nВведите начальную букву: ");
+            String input = scanner.nextLine();
+            if (input.isEmpty()) {
+                System.out.println("Empty input provided, using default: М");
+                showAllStaredOn('М');
+                return;
+            }
+            showAllStaredOn(input.charAt(0));
+        } catch (NoSuchElementException e) {
+            System.out.println("\nInput unavailable, using default: М");
+            showAllStaredOn('М');
+        } catch (StringIndexOutOfBoundsException e) {
+            System.out.println("\nEmpty input provided, using default: М");
+            showAllStaredOn('М');
+        }
+    }
+    
+    public void showAllStaredOn(char initial) {        // Показать все продукты, которые начинаются на заданную букву
         System.out.println("Продукты, начинающиеся на букву \"" + initial + "\":");
         products.stream()
                 .filter(product -> product.charAt(0) == initial)

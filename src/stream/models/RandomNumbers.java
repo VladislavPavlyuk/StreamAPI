@@ -7,10 +7,6 @@ import java.util.stream.IntStream;
 public class RandomNumbers {
     int maxSize;
 
-    public RandomNumbers(int maxSize) {
-        this.maxSize = maxSize;
-    }
-
     public void setMaxSize(int maxSize) {
         this.maxSize = maxSize;
     }
@@ -19,19 +15,28 @@ public class RandomNumbers {
     }
 
     Random random = new Random();
+    int[] numbers;
+    long positiveCount;
+    long negativeCount;
+    long twoDigitCount;
+    long mirroredCount;
 
-    int[] numbers = IntStream.generate(() -> random.nextInt(201) - 100)
-            .limit(100)
-            .toArray();
+    public RandomNumbers(int maxSize) {
+        this.maxSize = maxSize;
+        this.numbers = IntStream.generate(() -> random.nextInt(20001) - 9999)
+                .limit(maxSize)
+                .toArray();
 
-    long positiveCount = IntStream.of(numbers).filter(n -> n > 0).count();
-    long negativeCount = IntStream.of(numbers).filter(n -> n < 0).count();
-    long twoDigitCount = IntStream.of(numbers).filter(n -> (n >= 10 && n < 100) || (n <= -10 && n > -100)).count();
-    long mirroredCount = IntStream.of(numbers).filter(RandomNumbers::isMirrored).count();
+        this.positiveCount = IntStream.of(numbers).filter(n -> n > 0).count();
+        this.negativeCount = IntStream.of(numbers).filter(n -> n < 0).count();
+        this.twoDigitCount = IntStream.of(numbers).filter(n -> (n >= 10 && n < 100) || (n <= -10 && n > -100)).count();
+        this.mirroredCount = IntStream.of(numbers).filter(RandomNumbers::isMirrored).count();
+    }
 
-        public void print() {
+    public void print() {
             System.out.println("maxSize : " + getMaxSize());
             for (int i = 0; i < numbers.length; i++) {
+
                 System.out.println("number "+ i + " : " + numbers[i] + "  ");
             }
             System.out.println("Positive count: " + positiveCount);
