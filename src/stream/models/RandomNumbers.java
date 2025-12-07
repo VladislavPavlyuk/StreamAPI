@@ -25,7 +25,7 @@ public class RandomNumbers {
 
     long positiveCount = IntStream.of(numbers).filter(n -> n > 0).count();
     long negativeCount = IntStream.of(numbers).filter(n -> n < 0).count();
-    long twoDigitCount = IntStream.of(numbers).filter(n -> n >= 10 && n < 100 || n <= -10 && n > -100).count();
+    long twoDigitCount = IntStream.of(numbers).filter(n -> (n >= 10 && n < 100) || (n <= -10 && n > -100)).count();
     long mirroredCount = IntStream.of(numbers).filter(RandomNumbers::isMirrored).count();
 
         public void print() {

@@ -1,7 +1,6 @@
 package stream.models;
 
 import java.util.*;
-import java.util.stream.Collectors;
 
 public class Food {
     public  Food() {}
@@ -20,22 +19,24 @@ public class Food {
     }
 
     public void showAllRepeating() {        // Посчитать сколько раз встречается продукт, чье название ввёл пользователь
-        Scanner scanner = new Scanner(System.in);
-        System.out.print("\nВведите название продукта для подсчета, например Молоко: ");
-        String inputProduct = scanner.nextLine();
-        long count = products.stream()
-                .filter(product -> product.equalsIgnoreCase(inputProduct))
-                .count();
-        System.out.println("Продукт \"" + inputProduct + "\" встречается " + count + " раз.");
+        try (Scanner scanner = new Scanner(System.in)) {
+            System.out.print("\nВведите название продукта для подсчета, например Молоко: ");
+            String inputProduct = scanner.nextLine();
+            long count = products.stream()
+                    .filter(product -> product.equalsIgnoreCase(inputProduct))
+                    .count();
+            System.out.println("Продукт \"" + inputProduct + "\" встречается " + count + " раз.");
+        }
     }
     public void showAllStaredOn() {        // Показать все продукты, которые начинаются на заданную букву
-        System.out.print("\nВведите начальную букву: ");
-        Scanner scanner = new Scanner(System.in);
-        char initial = scanner.nextLine().charAt(0);
-        System.out.println("Продукты, начинающиеся на букву \"" + initial + "\":");
-        products.stream()
-                .filter(product -> product.charAt(0) == initial)
-                .forEach(System.out::println);
+        try (Scanner scanner = new Scanner(System.in)) {
+            System.out.print("\nВведите начальную букву: ");
+            char initial = scanner.nextLine().charAt(0);
+            System.out.println("Продукты, начинающиеся на букву \"" + initial + "\":");
+            products.stream()
+                    .filter(product -> product.charAt(0) == initial)
+                    .forEach(System.out::println);
+        }
     }
 
     public void showAllMilk(){

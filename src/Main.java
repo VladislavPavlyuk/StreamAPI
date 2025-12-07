@@ -2,6 +2,7 @@
 import stream.models.Food;
 import stream.models.RandomNumbers;
 import utils.DeviceFactory;
+import utils.FoodFactory;
 import utils.ProjectorFactory;
 
 public class Main {
@@ -16,6 +17,12 @@ public class Main {
         food.showAllStaredOn();
         food.showAllRepeating();
         food.showAllMilk();
+
+        System.out.println("\n=== FoodFactory ===");
+        System.out.println("Случайные продукты:");
+        for (int i = 0; i < 5; i++) {
+            System.out.println("Продукт " + (i + 1) + ": " + FoodFactory.getRandomProduct());
+        }
 
         DeviceFactory devices = new DeviceFactory();
         devices.showAll();
