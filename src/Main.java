@@ -9,15 +9,7 @@ import utils.RandomNumbersFactory;
 public class Main {
     public static void main(String[] args) {
 
-        RandomNumbers randomNumbers = new RandomNumbers(100);
-        randomNumbers.print();
-        
-        System.out.println("\n=== RandomNumbersFactory ===");
-        System.out.println("Случайные числа для тестирования:");
-        for (int i = 0; i < 10; i++) {
-            System.out.print(RandomNumbersFactory.generateRandomNumber() + " ");
-        }
-        System.out.println("\n\nСоздание RandomNumbers через фабрику:");
+        System.out.println("\n\nCreating RandomNumbers via factory:");
         RandomNumbers testNumbers = RandomNumbersFactory.createRandomNumbers(50);
         testNumbers.print();
 
@@ -28,10 +20,12 @@ public class Main {
         food.showAllRepeating();
         food.showAllMilk();
 
-        System.out.println("\n=== FoodFactory ===");
-        System.out.println("Случайные продукты:");
+        System.out.println("\n\n");
+
+        System.out.println("\n\n\n=== FoodFactory ===");
+        System.out.println("Random products:");
         for (int i = 0; i < 5; i++) {
-            System.out.println("Продукт " + (i + 1) + ": " + FoodFactory.getRandomProduct());
+            System.out.println("Product " + (i + 1) + ": " + FoodFactory.getRandomProduct());
         }
 
         DeviceFactory devices = new DeviceFactory();
@@ -42,10 +36,10 @@ public class Main {
         devices.showAllByType("Phone");
         devices.showAllByYears(2019,2020);
         
-        System.out.println("\n=== DeviceFactory - Случайные устройства ===");
-        System.out.println("Случайные устройства:");
+        System.out.println("\n=== DeviceFactory - Random Devices ===");
+        System.out.println("Random devices:");
         for (int i = 0; i < 3; i++) {
-            System.out.println("Устройство " + (i + 1) + ": " + devices.createRandomDevice());
+            System.out.println("Device " + (i + 1) + ": " + devices.createRandomDevice());
         }
 
         ProjectorFactory projects = new ProjectorFactory();
@@ -58,10 +52,10 @@ public class Main {
         projects.showAllSortedByPriceAccent();
         projects.showAllSortedByPriceDeccent();
         
-        System.out.println("\n=== ProjectorFactory - Случайные проекторы ===");
-        System.out.println("Случайные проекторы:");
+        System.out.println("\n=== ProjectorFactory - Random Projectors ===");
+        System.out.println("Random projectors:");
         for (int i = 0; i < 3; i++) {
-            System.out.println("Проектор " + (i + 1) + ": " + projects.createRandomProjector());
+            System.out.println("Projector " + (i + 1) + ": " + projects.createRandomProjector());
         }
 
     }

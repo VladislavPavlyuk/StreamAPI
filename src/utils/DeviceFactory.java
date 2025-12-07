@@ -64,28 +64,38 @@ public class DeviceFactory {
     );
 
     /**
-     * Создает случайное устройство из набора
-     * @return случайное устройство
+     * Creates a random device from the set
+     * @return random device
      */
     public Device createRandomDevice() {
         return devices.get(random.nextInt(devices.size()));
     }
 
     /**
-     * Статический метод для создания случайного устройства
-     * @return случайное устройство
+     * Static method for creating a random device
+     * @return random device
      */
     public static Device getRandomDevice() {
         DeviceFactory factory = new DeviceFactory();
         return factory.createRandomDevice();
     }
 
-    public void showAll() {    // Показать все устройства
+    public void showAll() {    // Show all devices
         System.out.println("All devices:");
-        devices.forEach(System.out::println);
+        System.out.printf("%-12s %-6s %-10s %-8s %-8s%n", "Name", "Year", "Price", "Color", "Type");
+        System.out.println("------------------------------------------------------------");
+        int columns = 3;
+        for (int i = 0; i < devices.size(); i++) {
+            Device d = devices.get(i);
+            System.out.printf("%-12s %-6d %-10.2f %-8s %-8s  ", 
+                    d.getName(), d.getYear(), d.getPrice(), d.getColor(), d.getType());
+            if ((i + 1) % columns == 0 || i == devices.size() - 1) {
+                System.out.println();
+            }
+        }
     }
 
-    public void showAllByColor(String color) {    // Показать все устройства заданного цвета
+    public void showAllByColor(String color) {    // Show all devices of specified color
         //String color = "Red";
         System.out.println("\nDevices with color " + color + ":");
         devices.stream()
@@ -93,7 +103,7 @@ public class DeviceFactory {
                 .forEach(System.out::println);
     }
 
-    public void showAllByYear(int year) {    // Показать все устройства заданного года выпуска
+    public void showAllByYear(int year) {    // Show all devices of specified release year
         //int year = 2020;
         System.out.println("\nDevices from year " + year + ":");
         devices.stream()
@@ -101,7 +111,7 @@ public class DeviceFactory {
                 .forEach(System.out::println);
     }
 
-    public void showAllByExpensiveThan(double price) {     // Показать все устройства дороже заданной цены
+    public void showAllByExpensiveThan(double price) {     // Show all devices more expensive than specified price
         //double price = 300.00;
         System.out.println("\nDevices more expensive than " + price + ":");
         devices.stream()
@@ -109,7 +119,7 @@ public class DeviceFactory {
                 .forEach(System.out::println);
     }
 
-    public void showAllByType(String type) {     // Показать все устройства заданного типа
+    public void showAllByType(String type) {     // Show all devices of specified type
         //String type = "Laptop";
         System.out.println("\nDevices of type " + type + ":");
         devices.stream()
@@ -117,7 +127,7 @@ public class DeviceFactory {
                 .forEach(System.out::println);
     }
 
-    public void showAllByYears(int startYear, int endYear) {       // Показать все устройства, чей год выпуска находится в указанном диапазоне
+    public void showAllByYears(int startYear, int endYear) {       // Show all devices whose release year is in the specified range
         //int startYear = 2019;
         //int endYear = 2021;
         System.out.println("\nDevices from year range " + startYear + " to " + endYear + ":");

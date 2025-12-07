@@ -15,42 +15,64 @@ public class Food {
                 "Чай", "Кофе", "Сок", "Вода", "Лимонад", "Компот", "Квас"
         );
 
-    public void showAll() {        // Показать все продукты
-        System.out.println("Все продукты:");
-        products.forEach(System.out::println);
+    public void showAll() {        // Show all products
+        System.out.println("All products:");
+        int columns = 5;
+        for (int i = 0; i < products.size(); i++) {
+            System.out.printf("%-15s", products.get(i));
+            if ((i + 1) % columns == 0 || i == products.size() - 1) {
+                System.out.println();
+            }
+        }
     }
 
-    public void showAllLessFive() {        // Показать все продукты с названием меньше пяти символов
-        System.out.println("\nПродукты с названием меньше пяти символов:");
+    public void showAllLessFive() {        // Show all products with name less than five characters
+        System.out.println("\nProducts with name less than five characters:");
         products.stream()
                 .filter(product -> product.length() < 5)
                 .forEach(System.out::println);
     }
 
-    public void showAllRepeating() {        // Посчитать сколько раз встречается продукт, чье название ввёл пользователь
+    public void showAllRepeating() {        // Count how many times a product appears, whose name was entered by user
         try (Scanner scanner = new Scanner(System.in)) {
-            System.out.print("\nВведите название продукта для подсчета, например Молоко: ");
+            System.out.print("\nEnter product name to count, for example Молоко: ");
             String inputProduct = scanner.nextLine();
-            long count = products.stream()
-                    .filter(product -> product.equalsIgnoreCase(inputProduct))
-                    .count();
-            System.out.println("Продукт \"" + inputProduct + "\" встречается " + count + " раз.");
+            showAllRepeating(inputProduct);
+        } catch (NoSuchElementException e) {
+            // If input is unavailable, use default value
+            System.out.println("\nInput unavailable, using default value: Молоко");
+            showAllRepeating("Молоко");
         }
     }
-    public void showAllStaredOn() {        // Показать все продукты, которые начинаются на заданную букву
+    
+    public void showAllRepeating(String inputProduct) {        // Count how many times a product appears
+        long count = products.stream()
+                .filter(product -> product.equalsIgnoreCase(inputProduct))
+                .count();
+        System.out.println("Product \"" + inputProduct + "\" appears " + count + " times.");
+    }
+    public void showAllStaredOn() {        // Show all products that start with a given letter
         try (Scanner scanner = new Scanner(System.in)) {
-            System.out.print("\nВведите начальную букву: ");
+            System.out.print("\nEnter initial letter: ");
             char initial = scanner.nextLine().charAt(0);
-            System.out.println("Продукты, начинающиеся на букву \"" + initial + "\":");
-            products.stream()
-                    .filter(product -> product.charAt(0) == initial)
-                    .forEach(System.out::println);
+            showAllStaredOn(initial);
+        } catch (NoSuchElementException e) {
+            // If input is unavailable, use default value
+            System.out.println("\nInput unavailable, using default value: М");
+            showAllStaredOn('М');
         }
+    }
+    
+    public void showAllStaredOn(char initial) {        // Show all products that start with a given letter
+        System.out.println("Products starting with letter \"" + initial + "\":");
+        products.stream()
+                .filter(product -> product.charAt(0) == initial)
+                .forEach(System.out::println);
     }
 
     public void showAllMilk(){
-        // Показать все продукты из категории «Молоко»
-        System.out.println("\nПродукты из категории «Молоко»:");
+        // Show all products from "Молоко" category
+        System.out.println("\nProducts from \"Молоко\" category:");
         products.stream()
                 .filter(product -> product.equalsIgnoreCase("Молоко"))
                 .forEach(System.out::println);

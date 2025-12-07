@@ -65,72 +65,82 @@ public  class ProjectorFactory {
                 new Projector("Projector XX", 2024, 495.0, "Manufacturer Y")
         );
 
-        public void showAll() {  // Показать все проекторы
-                System.out.println("Все проекторы:");
-                projectors.forEach(System.out::println);
+        public void showAll() {  // Show all projectors
+                System.out.println("All projectors:");
+                System.out.printf("%-18s %-6s %-10s %-20s%n", "Name", "Year", "Price", "Manufacturer");
+                System.out.println("----------------------------------------------------------------");
+                int columns = 3;
+                for (int i = 0; i < projectors.size(); i++) {
+                        Projector p = projectors.get(i);
+                        System.out.printf("%-18s %-6d %-10.2f %-20s  ", 
+                                p.getName(), p.getYear(), p.getPrice(), p.getManufacturer());
+                        if ((i + 1) % columns == 0 || i == projectors.size() - 1) {
+                                System.out.println();
+                        }
+                }
         }
-        public void showAllByManufacturer(String manufacturer) {  // Показать все проекторы одного производителя
+        public void showAllByManufacturer(String manufacturer) {  // Show all projectors of one manufacturer
                // String manufacturer = "Manufacturer X";
-                System.out.println("\nПроекторы производителя " + manufacturer + ":");
+                System.out.println("\nProjectors from manufacturer " + manufacturer + ":");
                 projectors.stream()
                         .filter(p -> p.getManufacturer().equals(manufacturer))
                         .forEach(System.out::println);
         }
 
-        public void showAllByYear(int currentYear) {         // Показать все проекторы текущего года
+        public void showAllByYear(int currentYear) {         // Show all projectors of current year
                 //int currentYear = 2024;
-                System.out.println("\nПроекторы текущего года:");
+                System.out.println("\nProjectors from year " + currentYear + ":");
                 projectors.stream()
                         .filter(p -> p.getYear() == currentYear)
                         .forEach(System.out::println);
         }
 
-        public void showAllExpensiveThan(double priceThreshold) {  // Показать все проекторы дороже заданной цены
+        public void showAllExpensiveThan(double priceThreshold) {  // Show all projectors more expensive than specified price
                 //double priceThreshold = 600.0;
-                System.out.println("\nПроекторы дороже " + priceThreshold + ":");
+                System.out.println("\nProjectors more expensive than " + priceThreshold + ":");
                 projectors.stream()
                         .filter(p -> p.getPrice() > priceThreshold)
                         .forEach(System.out::println);
         }
 
-        public void showAllSortedByPriceAccent() {  // Показать все проекторы, отсортированные по цене по возрастанию
-                System.out.println("\nПроекторы, отсортированные по цене по возрастанию:");
+        public void showAllSortedByPriceAccent() {  // Show all projectors sorted by price ascending
+                System.out.println("\nProjectors sorted by price ascending:");
                 projectors.stream()
                         .sorted(Comparator.comparingDouble(Projector::getPrice))
                         .forEach(System.out::println);
         }
-        public void showAllSortedByPriceDeccent() {                 // Показать все проекторы, отсортированные по цене по убыванию
-                System.out.println("\nПроекторы, отсортированные по цене по убыванию:");
+        public void showAllSortedByPriceDeccent() {                 // Show all projectors sorted by price descending
+                System.out.println("\nProjectors sorted by price descending:");
                 projectors.stream()
                         .sorted(Comparator.comparingDouble(Projector::getPrice).reversed())
                         .forEach(System.out::println);
         }
 
-        public void showAllSortedByYearAccent() {  // Показать все проекторы, отсортированные по году выпуска по возрастанию
-                System.out.println("\nПроекторы, отсортированные по году выпуска по возрастанию:");
+        public void showAllSortedByYearAccent() {  // Show all projectors sorted by release year ascending
+                System.out.println("\nProjectors sorted by release year ascending:");
                 projectors.stream()
                         .sorted(Comparator.comparingInt(Projector::getYear))
                         .forEach(System.out::println);
         }
 
-        public void showAllSortedByYearDescent() {         // Показать все проекторы, отсортированные по году выпуска по убыванию
-                System.out.println("\nПроекторы, отсортированные по году выпуска по убыванию:");
+        public void showAllSortedByYearDescent() {         // Show all projectors sorted by release year descending
+                System.out.println("\nProjectors sorted by release year descending:");
                 projectors.stream()
                         .sorted(Comparator.comparingInt(Projector::getYear).reversed())
                         .forEach(System.out::println);
         }
 
         /**
-         * Создает случайный проектор из набора
-         * @return случайный проектор
+         * Creates a random projector from the set
+         * @return random projector
          */
         public Projector createRandomProjector() {
                 return projectors.get(random.nextInt(projectors.size()));
         }
 
         /**
-         * Статический метод для создания случайного проектора
-         * @return случайный проектор
+         * Static method for creating a random projector
+         * @return random projector
          */
         public static Projector getRandomProjector() {
                 ProjectorFactory factory = new ProjectorFactory();

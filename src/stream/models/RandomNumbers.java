@@ -34,20 +34,20 @@ public class RandomNumbers {
             for (int i = 0; i < numbers.length; i++) {
                 System.out.println("number "+ i + " : " + numbers[i] + "  ");
             }
-            System.out.println("Количество положительных: " + positiveCount);
-            System.out.println("Количество отрицательных: " + negativeCount);
-            System.out.println("Количество двухзначных: " + twoDigitCount);
+            System.out.println("Positive count: " + positiveCount);
+            System.out.println("Negative count: " + negativeCount);
+            System.out.println("Two-digit count: " + twoDigitCount);
             
             String mirroredNumbers = IntStream.of(numbers)
                     .filter(RandomNumbers::isMirrored)
                     .mapToObj(String::valueOf)
                     .collect(Collectors.joining(", "));
-            System.out.println("Количество зеркальных чисел: " + mirroredCount + " (" + mirroredNumbers + ")");
+            System.out.println("Mirrored numbers count: " + mirroredCount + " (" + mirroredNumbers + ")");
         }
 
     private static boolean isMirrored(int number) {
         String str = String.valueOf(Math.abs(number));
-        return new StringBuilder(str).reverse().toString().equals(str);
+        return str.length() > 1 && new StringBuilder(str).reverse().toString().equals(str);
     }
 }
 

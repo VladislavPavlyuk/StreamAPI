@@ -20,16 +20,16 @@ public class FoodFactory {
     private static final Random random = new Random();
     
     /**
-     * Возвращает случайное название продукта из набора
-     * @return случайное название продукта
+     * Returns a random product name from the set
+     * @return random product name
      */
     public static String getRandomProduct() {
         return products.get(random.nextInt(products.size()));
     }
     
     /**
-     * Возвращает случайное название продукта из набора (нестатический метод)
-     * @return случайное название продукта
+     * Returns a random product name from the set (non-static method)
+     * @return random product name
      */
     public String createProduct() {
         return getRandomProduct();
