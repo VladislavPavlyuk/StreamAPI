@@ -1,7 +1,7 @@
 package utils;
 
 import stream.models.Food;
-import stream.models.FoodItem;
+import stream.models.FoodCategory;
 
 import java.util.*;
 
@@ -30,8 +30,8 @@ public class FoodFactory {
      * @param size number of products to generate
      * @return list of random food items
      */
-    public static List<FoodItem> generateProducts(int size) {
-        List<FoodItem> products = new ArrayList<>();
+    public static List<FoodCategory> generateProducts(int size) {
+        List<FoodCategory> products = new ArrayList<>();
         List<String> categories = new ArrayList<>(productsByCategory.keySet());
         
         // Ensure products are distributed across categories
@@ -44,7 +44,7 @@ public class FoodFactory {
             
             for (int i = 0; i < count && products.size() < size; i++) {
                 String productName = categoryProducts.get(random.nextInt(categoryProducts.size()));
-                products.add(new FoodItem(productName, category));
+                products.add(new FoodCategory(productName, category));
             }
         }
         

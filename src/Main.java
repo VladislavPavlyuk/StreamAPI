@@ -1,4 +1,5 @@
 
+import stream.models.Devices;
 import stream.models.Food;
 import stream.models.RandomNumbers;
 import utils.DeviceFactory;
@@ -24,28 +25,30 @@ public class Main {
         System.out.println("\n\nCreating RandomNumbers via factory:");
         RandomNumbers testNumbers = RandomNumbersFactory.createRandomNumbers(50);
         testNumbers.print();
+        waitForEnter();
 
         System.out.println("\n\nCreating Food via factory:");
         Food food = FoodFactory.createFood(50);
         food.showAll();
-        food.showAllLessFive();
-        food.showAllStaredOn();
-        food.showAllRepeating();
-        food.showAllMilk();
-
+        food.showAllLessThan(5);
+        food.showAllStaredOn('Б');
+        food.showAll(" Молоко");
+        waitForEnter();
+/*
         System.out.println("\n\nCreating Devices via factory:");
-        DeviceFactory devices = new DeviceFactory();
+        Devices devices = DeviceFactory.createDevices(50);
         devices.showAll();
-        devices.showAllByYear(2020);
         devices.showAllByColor("Red");
+        devices.showAllByYear(2020);
         devices.showAllByExpensiveThan(200);
         devices.showAllByType("Phone");
         devices.showAllByYears(2019,2020);
-        
+        waitForEnter();
+
         System.out.println("\n=== DeviceFactory - Random Devices ===");
         System.out.println("Random devices:");
         for (int i = 0; i < 3; i++) {
-            System.out.println("Device " + (i + 1) + ": " + devices.createRandomDevice());
+            System.out.println("Device " + (i + 1) + ": " + DeviceFactory.createRandomDevice());
         }
         waitForEnter();
 
@@ -65,6 +68,6 @@ public class Main {
             System.out.println("Projector " + (i + 1) + ": " + projects.createRandomProjector());
         }
         waitForEnter();
-
+*/
     }
 }

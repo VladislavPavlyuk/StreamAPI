@@ -39,15 +39,15 @@ public class RandomNumbers {
 
                 System.out.println("number "+ i + " : " + numbers[i] + "  ");
             }
-            System.out.println("Positive count: " + positiveCount);
-            System.out.println("Negative count: " + negativeCount);
-            System.out.println("Two-digit count: " + twoDigitCount);
+            System.out.println("\tPositive count: " + positiveCount);
+            System.out.println("\tNegative count: " + negativeCount);
+            System.out.println("\tTwo-digit count: " + twoDigitCount);
             
             String mirroredNumbers = IntStream.of(numbers)
                     .filter(RandomNumbers::isMirrored)
                     .mapToObj(String::valueOf)
                     .collect(Collectors.joining(", "));
-            System.out.println("Mirrored numbers count: " + mirroredCount + " (" + mirroredNumbers + ")");
+            System.out.println("\tMirrored numbers count: " + mirroredCount + " (" + mirroredNumbers + ")");
         }
 
     private static boolean isMirrored(int number) {

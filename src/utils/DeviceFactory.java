@@ -1,6 +1,7 @@
 package utils;
 
 import stream.models.Device;
+import stream.models.Devices;
 
 import java.util.Arrays;
 import java.util.List;
@@ -10,129 +11,95 @@ public class DeviceFactory {
 
     private static final Random random = new Random();
 
-    protected List<Device> devices = Arrays.asList(
-            new Device("Device1", 2020, 299.99, "Red", "Phone"),
-            new Device("Device2", 2019, 399.99, "Blue", "Tablet"),
-            new Device("Device3", 2021, 499.99, "Red", "Laptop"),
-            new Device("Device4", 2018, 199.99, "Green", "Phone"),
-            new Device("Device5", 2020, 299.99, "Blue", "Laptop"),
-            new Device("Device6", 2022, 599.99, "Black", "Phone"),
-            new Device("Device7", 2021, 349.99, "White", "Tablet"),
-            new Device("Device8", 2020, 449.99, "Silver", "Laptop"),
-            new Device("Device9", 2019, 249.99, "Red", "Phone"),
-            new Device("Device10", 2023, 699.99, "Blue", "Tablet"),
-            new Device("Device11", 2022, 549.99, "Green", "Laptop"),
-            new Device("Device12", 2021, 379.99, "Black", "Phone"),
-            new Device("Device13", 2020, 429.99, "White", "Tablet"),
-            new Device("Device14", 2019, 319.99, "Silver", "Laptop"),
-            new Device("Device15", 2023, 649.99, "Red", "Phone"),
-            new Device("Device16", 2022, 479.99, "Blue", "Tablet"),
-            new Device("Device17", 2021, 389.99, "Green", "Laptop"),
-            new Device("Device18", 2020, 269.99, "Black", "Phone"),
-            new Device("Device19", 2019, 359.99, "White", "Tablet"),
-            new Device("Device20", 2023, 579.99, "Silver", "Laptop"),
-            new Device("Device21", 2022, 419.99, "Red", "Phone"),
-            new Device("Device22", 2021, 339.99, "Blue", "Tablet"),
-            new Device("Device23", 2020, 459.99, "Green", "Laptop"),
-            new Device("Device24", 2019, 289.99, "Black", "Phone"),
-            new Device("Device25", 2023, 629.99, "White", "Tablet"),
-            new Device("Device26", 2022, 369.99, "Silver", "Laptop"),
-            new Device("Device27", 2021, 409.99, "Red", "Phone"),
-            new Device("Device28", 2020, 319.99, "Blue", "Tablet"),
-            new Device("Device29", 2019, 469.99, "Green", "Laptop"),
-            new Device("Device30", 2023, 559.99, "Black", "Phone"),
-            new Device("Device31", 2022, 349.99, "White", "Tablet"),
-            new Device("Device32", 2021, 439.99, "Silver", "Laptop"),
-            new Device("Device33", 2020, 279.99, "Red", "Phone"),
-            new Device("Device34", 2019, 389.99, "Blue", "Tablet"),
-            new Device("Device35", 2023, 609.99, "Green", "Laptop"),
-            new Device("Device36", 2022, 329.99, "Black", "Phone"),
-            new Device("Device37", 2021, 419.99, "White", "Tablet"),
-            new Device("Device38", 2020, 359.99, "Silver", "Laptop"),
-            new Device("Device39", 2019, 299.99, "Red", "Phone"),
-            new Device("Device40", 2023, 539.99, "Blue", "Tablet"),
-            new Device("Device41", 2022, 379.99, "Green", "Laptop"),
-            new Device("Device42", 2021, 309.99, "Black", "Phone"),
-            new Device("Device43", 2020, 449.99, "White", "Tablet"),
-            new Device("Device44", 2019, 339.99, "Silver", "Laptop"),
-            new Device("Device45", 2023, 589.99, "Red", "Phone"),
-            new Device("Device46", 2022, 399.99, "Blue", "Tablet"),
-            new Device("Device47", 2021, 429.99, "Green", "Laptop"),
-            new Device("Device48", 2020, 289.99, "Black", "Phone"),
-            new Device("Device49", 2019, 369.99, "White", "Tablet"),
-            new Device("Device50", 2023, 619.99, "Silver", "Laptop")
+    private static final List<Device> deviceTemplates = Arrays.asList(
+            new Device("iPhone 13", 2021, 799.99, "Blue", "Phone"),
+            new Device("Samsung Galaxy S21", 2021, 699.99, "Black", "Phone"),
+            new Device("MacBook Pro 16", 2021, 2499.99, "Silver", "Laptop"),
+            new Device("iPad Air", 2022, 599.99, "White", "Tablet"),
+            new Device("Xiaomi Mi 11", 2021, 499.99, "Blue", "Phone"),
+            new Device("Dell XPS 13", 2022, 1299.99, "Silver", "Laptop"),
+            new Device("Samsung Galaxy Tab S8", 2022, 699.99, "Black", "Tablet"),
+            new Device("Huawei P50 Pro", 2021, 899.99, "White", "Phone"),
+            new Device("HP Spectre x360", 2023, 1399.99, "Silver", "Laptop"),
+            new Device("iPad Pro 12.9", 2022, 1099.99, "White", "Tablet"),
+            new Device("OnePlus 9 Pro", 2021, 729.99, "Black", "Phone"),
+            new Device("Lenovo ThinkPad X1", 2022, 1599.99, "Black", "Laptop"),
+            new Device("Microsoft Surface Pro 8", 2021, 999.99, "Silver", "Tablet"),
+            new Device("Google Pixel 6", 2021, 599.99, "White", "Phone"),
+            new Device("Asus ZenBook 14", 2022, 999.99, "Silver", "Laptop"),
+            new Device("Sony Xperia 1 III", 2021, 1199.99, "Black", "Phone"),
+            new Device("Samsung Galaxy Book Pro", 2021, 999.99, "Silver", "Laptop"),
+            new Device("iPad Mini", 2021, 499.99, "White", "Tablet"),
+            new Device("Xiaomi Redmi Note 11", 2022, 299.99, "Blue", "Phone"),
+            new Device("Acer Swift 5", 2022, 899.99, "Silver", "Laptop"),
+            new Device("Huawei MatePad Pro", 2021, 549.99, "Black", "Tablet"),
+            new Device("iPhone 12", 2020, 699.99, "Red", "Phone"),
+            new Device("MacBook Air M2", 2022, 1199.99, "Silver", "Laptop"),
+            new Device("Samsung Galaxy Tab A8", 2022, 229.99, "White", "Tablet"),
+            new Device("Oppo Find X5", 2022, 899.99, "Black", "Phone"),
+            new Device("HP Pavilion 15", 2021, 699.99, "Silver", "Laptop"),
+            new Device("Microsoft Surface Go 3", 2021, 399.99, "White", "Tablet"),
+            new Device("Realme GT 2 Pro", 2022, 599.99, "Blue", "Phone"),
+            new Device("Lenovo Yoga 9i", 2022, 1299.99, "Silver", "Laptop"),
+            new Device("Samsung Galaxy S20", 2020, 599.99, "Black", "Phone"),
+            new Device("iPad 10.2", 2021, 329.99, "White", "Tablet"),
+            new Device("Dell Inspiron 15", 2021, 599.99, "Silver", "Laptop"),
+            new Device("Xiaomi Mi Pad 5", 2021, 349.99, "Black", "Tablet"),
+            new Device("OnePlus 10 Pro", 2022, 899.99, "Green", "Phone"),
+            new Device("Asus ROG Zephyrus", 2022, 1999.99, "Black", "Laptop"),
+            new Device("Huawei Mate 50", 2022, 1099.99, "Silver", "Phone"),
+            new Device("MacBook Pro 14", 2021, 1999.99, "Silver", "Laptop"),
+            new Device("Samsung Galaxy Tab S7", 2020, 649.99, "White", "Tablet"),
+            new Device("Google Pixel 7", 2022, 599.99, "Black", "Phone"),
+            new Device("HP EliteBook 840", 2022, 1199.99, "Silver", "Laptop"),
+            new Device("Microsoft Surface Laptop 4", 2021, 999.99, "Blue", "Laptop"),
+            new Device("iPhone SE", 2022, 429.99, "Red", "Phone"),
+            new Device("Acer Predator Helios", 2022, 1499.99, "Black", "Laptop"),
+            new Device("Sony Xperia 5 III", 2021, 949.99, "White", "Phone"),
+            new Device("Lenovo IdeaPad 5", 2021, 699.99, "Silver", "Laptop"),
+            new Device("iPad Air 5", 2022, 599.99, "Blue", "Tablet"),
+            new Device("Xiaomi Mi 12", 2022, 749.99, "Black", "Phone"),
+            new Device("Dell Latitude 7420", 2021, 1299.99, "Silver", "Laptop"),
+            new Device("Samsung Galaxy Tab S6", 2019, 649.99, "White", "Tablet"),
+            new Device("OnePlus Nord 2", 2021, 399.99, "Blue", "Phone"),
+            new Device("Asus VivoBook 15", 2021, 599.99, "Silver", "Laptop")
     );
 
     /**
-     * Creates a random device from the set
-     * @return random device
+     * Generates a list of random devices
+     * @param size number of devices to generate
+     * @return list of random devices
      */
-    public Device createRandomDevice() {
-        return devices.get(random.nextInt(devices.size()));
+    public static List<Device> generateDevices(int size) {
+        List<Device> devices = new java.util.ArrayList<>();
+        for (int i = 0; i < size; i++) {
+            devices.add(deviceTemplates.get(random.nextInt(deviceTemplates.size())));
+        }
+        return devices;
+    }
+    
+    /**
+     * Creates a Devices instance with randomly generated devices
+     * @param size number of devices to generate
+     * @return Devices instance
+     */
+    public static Devices createDevices(int size) {
+        return new Devices(generateDevices(size));
+    }
+    
+    /**
+     * Creates a Devices instance with 50 randomly generated devices
+     * @return Devices instance
+     */
+    public static Devices createDevices() {
+        return createDevices(50);
     }
 
     /**
-     * Static method for creating a random device
+     * Creates a random device from the templates
      * @return random device
      */
-    public static Device getRandomDevice() {
-        DeviceFactory factory = new DeviceFactory();
-        return factory.createRandomDevice();
-    }
-
-    public void showAll() {    // Show all devices
-        System.out.println("All devices:");
-        System.out.printf("%-12s %-6s %-10s %-8s %-8s%n", "Name", "Year", "Price", "Color", "Type");
-        System.out.println("------------------------------------------------------------");
-        int columns = 3;
-        for (int i = 0; i < devices.size(); i++) {
-            Device d = devices.get(i);
-            System.out.printf("%-12s %-6d %-10.2f %-8s %-8s  ", 
-                    d.getName(), d.getYear(), d.getPrice(), d.getColor(), d.getType());
-            if ((i + 1) % columns == 0 || i == devices.size() - 1) {
-                System.out.println();
-            }
-        }
-    }
-
-    public void showAllByColor(String color) {    // Show all devices of specified color
-        //String color = "Red";
-        System.out.println("\nDevices with color " + color + ":");
-        devices.stream()
-                .filter(device -> device.getColor().equalsIgnoreCase(color))
-                .forEach(System.out::println);
-    }
-
-    public void showAllByYear(int year) {    // Show all devices of specified release year
-        //int year = 2020;
-        System.out.println("\nDevices from year " + year + ":");
-        devices.stream()
-                .filter(device -> device.getYear() == year)
-                .forEach(System.out::println);
-    }
-
-    public void showAllByExpensiveThan(double price) {     // Show all devices more expensive than specified price
-        //double price = 300.00;
-        System.out.println("\nDevices more expensive than " + price + ":");
-        devices.stream()
-                .filter(device -> device.getPrice() > price)
-                .forEach(System.out::println);
-    }
-
-    public void showAllByType(String type) {     // Show all devices of specified type
-        //String type = "Laptop";
-        System.out.println("\nDevices of type " + type + ":");
-        devices.stream()
-                .filter(device -> device.getType().equalsIgnoreCase(type))
-                .forEach(System.out::println);
-    }
-
-    public void showAllByYears(int startYear, int endYear) {       // Show all devices whose release year is in the specified range
-        //int startYear = 2019;
-        //int endYear = 2021;
-        System.out.println("\nDevices from year range " + startYear + " to " + endYear + ":");
-        devices.stream()
-                .filter(device -> device.getYear() >= startYear && device.getYear() <= endYear)
-                .forEach(System.out::println);
+    public static Device createRandomDevice() {
+        return deviceTemplates.get(random.nextInt(deviceTemplates.size()));
     }
 }

@@ -1,10 +1,10 @@
 package stream.models;
 
-public class FoodItem {
+public class FoodCategory {
     private final String title;
     private final String category;
     
-    public FoodItem(String title, String category) {
+    public FoodCategory(String title, String category) {
         this.title = title;
         this.category = category;
     }
