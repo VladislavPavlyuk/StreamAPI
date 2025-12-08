@@ -72,10 +72,10 @@ public class Foods {
                         .filter(product -> product.getTitle().charAt(0) == initial));
     }
 
-    public <string> void showAllfromCategory(string category){
+    public void showAllfromCategory(String category){
 
         print("\nПродукты из категории " + category + " : ",
                 products.stream()
-                        .filter(product -> product.getCategory().equalsIgnoreCase("category")));
+                        .filter(product -> product.getCategory().equalsIgnoreCase(category)));
     }
 }

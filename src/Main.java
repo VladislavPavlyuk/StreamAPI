@@ -26,16 +26,17 @@ public class Main {
         RandomNumbers testNumbers = RandomNumbersFactory.createRandomNumbers(50);
         testNumbers.print();
         waitForEnter();
-*/
+
         System.out.println("\n\nCreating Foods via factory:");
         Foods foods = FoodFactory.createFood(50);
         foods.showAll();
         foods.showAllLessThan(5);
-        foods.showAll("Мясо");
+        foods.showAll("Колбаса");
         foods.showAllStaredOn('Б');
         foods.showAllfromCategory("Молочные");
         waitForEnter();
-/*
+*/
+
         System.out.println("\n\nCreating Devices via factory:");
         Devices devices = DeviceFactory.createDevices(50);
         devices.showAll();
@@ -45,7 +46,7 @@ public class Main {
         devices.showAllByType("Phone");
         devices.showAllByYears(2019,2020);
         waitForEnter();
-
+/*
         System.out.println("\n=== DeviceFactory - Random Devices ===");
         System.out.println("Random devices:");
         for (int i = 0; i < 3; i++) {
