@@ -1,18 +1,18 @@
 package utils;
 
 import stream.models.Projector;
+import stream.models.Projectors;
 
 import java.util.Arrays;
-import java.util.Comparator;
 import java.util.List;
 import java.util.Random;
 
 
-public  class ProjectorFactory {
+public class ProjectorFactory {
 
         private static final Random random = new Random();
 
-        List<Projector> projectors = Arrays.asList(
+        private static final List<Projector> projectorTemplates = Arrays.asList(
                 new Projector("Projector A", 2023, 500.0, "Manufacturer X"),
                 new Projector("Projector B", 2024, 700.0, "Manufacturer Y"),
                 new Projector("Projector C", 2023, 600.0, "Manufacturer X"),
@@ -65,85 +65,49 @@ public  class ProjectorFactory {
                 new Projector("Projector XX", 2024, 495.0, "Manufacturer Y")
         );
 
-        public void showAll() {  // Show all projectors
-                System.out.println("All projectors:");
-                System.out.printf("%-18s %-6s %-10s %-20s%n", "Name", "Year", "Price", "Manufacturer");
-                System.out.println("----------------------------------------------------------------");
-                int columns = 3;
-                for (int i = 0; i < projectors.size(); i++) {
-                        Projector p = projectors.get(i);
-                        System.out.printf("%-18s %-6d %-10.2f %-20s  ", 
-                                p.getName(), p.getYear(), p.getPrice(), p.getManufacturer());
-                        if ((i + 1) % columns == 0 || i == projectors.size() - 1) {
-                                System.out.println();
-                        }
+        /**
+         * Generates a list of random projectors without duplicates
+         * @param size number of projectors to generate
+         * @return list of random projectors
+         */
+        public static List<Projector> generateProjectors(int size) {
+                java.util.Set<Projector> projectorsSet = new java.util.LinkedHashSet<>();
+                List<Projector> shuffledTemplates = new java.util.ArrayList<>(projectorTemplates);
+                java.util.Collections.shuffle(shuffledTemplates);
+                
+                // Limit size to available unique projectors
+                int actualSize = Math.min(size, projectorTemplates.size());
+                
+                // Add unique projectors
+                for (int i = 0; i < actualSize && i < shuffledTemplates.size(); i++) {
+                        projectorsSet.add(shuffledTemplates.get(i));
                 }
-        }
-        public void showAllByManufacturer(String manufacturer) {  // Show all projectors of one manufacturer
-               // String manufacturer = "Manufacturer X";
-                System.out.println("\nProjectors from manufacturer " + manufacturer + ":");
-                projectors.stream()
-                        .filter(p -> p.getManufacturer().equals(manufacturer))
-                        .forEach(System.out::println);
-        }
-
-        public void showAllByYear(int currentYear) {         // Show all projectors of current year
-                //int currentYear = 2024;
-                System.out.println("\nProjectors from year " + currentYear + ":");
-                projectors.stream()
-                        .filter(p -> p.getYear() == currentYear)
-                        .forEach(System.out::println);
-        }
-
-        public void showAllExpensiveThan(double priceThreshold) {  // Show all projectors more expensive than specified price
-                //double priceThreshold = 600.0;
-                System.out.println("\nProjectors more expensive than " + priceThreshold + ":");
-                projectors.stream()
-                        .filter(p -> p.getPrice() > priceThreshold)
-                        .forEach(System.out::println);
-        }
-
-        public void showAllSortedByPriceAccent() {  // Show all projectors sorted by price ascending
-                System.out.println("\nProjectors sorted by price ascending:");
-                projectors.stream()
-                        .sorted(Comparator.comparingDouble(Projector::getPrice))
-                        .forEach(System.out::println);
-        }
-        public void showAllSortedByPriceDeccent() {                 // Show all projectors sorted by price descending
-                System.out.println("\nProjectors sorted by price descending:");
-                projectors.stream()
-                        .sorted(Comparator.comparingDouble(Projector::getPrice).reversed())
-                        .forEach(System.out::println);
-        }
-
-        public void showAllSortedByYearAccent() {  // Show all projectors sorted by release year ascending
-                System.out.println("\nProjectors sorted by release year ascending:");
-                projectors.stream()
-                        .sorted(Comparator.comparingInt(Projector::getYear))
-                        .forEach(System.out::println);
-        }
-
-        public void showAllSortedByYearDescent() {         // Show all projectors sorted by release year descending
-                System.out.println("\nProjectors sorted by release year descending:");
-                projectors.stream()
-                        .sorted(Comparator.comparingInt(Projector::getYear).reversed())
-                        .forEach(System.out::println);
+                
+                return new java.util.ArrayList<>(projectorsSet);
         }
 
         /**
-         * Creates a random projector from the set
-         * @return random projector
+         * Creates a Projectors instance with randomly generated projectors
+         * @param size number of projectors to generate
+         * @return Projectors instance
          */
-        public Projector createRandomProjector() {
-                return projectors.get(random.nextInt(projectors.size()));
+        public static Projectors createProjectors(int size) {
+                return new Projectors(generateProjectors(size));
         }
 
         /**
-         * Static method for creating a random projector
+         * Creates a Projectors instance with all available projectors
+         * @return Projectors instance
+         */
+        public static Projectors createProjectors() {
+                return new Projectors(new java.util.ArrayList<>(projectorTemplates));
+        }
+
+        /**
+         * Creates a random projector from the templates
          * @return random projector
          */
-        public static Projector getRandomProjector() {
-                ProjectorFactory factory = new ProjectorFactory();
-                return factory.createRandomProjector();
+        public static Projector createRandomProjector() {
+                return projectorTemplates.get(random.nextInt(projectorTemplates.size()));
         }
 }

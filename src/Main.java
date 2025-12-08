@@ -1,6 +1,7 @@
 
 import stream.models.Devices;
 import stream.models.Foods;
+import stream.models.Projectors;
 import stream.models.RandomNumbers;
 import utils.DeviceFactory;
 import utils.FoodFactory;
@@ -35,7 +36,7 @@ public class Main {
         foods.showAllStaredOn('Б');
         foods.showAllfromCategory("Молочные");
         waitForEnter();
-*/
+
 
         System.out.println("\n\nCreating Devices via factory:");
         Devices devices = DeviceFactory.createDevices(50);
@@ -46,24 +47,21 @@ public class Main {
         devices.showAllByType("Phone");
         devices.showAllByYears(2019,2020);
         waitForEnter();
-/*
-        System.out.println("\n=== DeviceFactory - Random Devices ===");
-        System.out.println("Random devices:");
-        for (int i = 0; i < 3; i++) {
-            System.out.println("Device " + (i + 1) + ": " + DeviceFactory.createRandomDevice());
-        }
-        waitForEnter();
 
-        ProjectorFactory projects = new ProjectorFactory();
-        projects.showAll();
-        projects.showAllByYear(2022);
-        projects.showAllByManufacturer("Manufacturer X");
-        projects.showAllExpensiveThan(600);
-        projects.showAllSortedByYearDescent();
-        projects.showAllSortedByYearAccent();
-        projects.showAllSortedByPriceAccent();
-        projects.showAllSortedByPriceDeccent();
-        
+ */
+        System.out.println("\n\nCreating Projectors via Factory :");
+        Projectors projectors = ProjectorFactory.createProjectors();
+        projectors.showAll();
+        projectors.showAllByYear(2022);
+        projectors.showAllByManufacturer("Manufacturer X");
+        projectors.showAllExpensiveThan(600);
+        projectors.showAllSortedByYearDescent();
+        projectors.showAllSortedByYearAccent();
+        projectors.showAllSortedByPriceAccent();
+        projectors.showAllSortedByPriceDeccent();
+
+        waitForEnter();
+ /*
         System.out.println("\n=== ProjectorFactory - Random Projectors ===");
         System.out.println("Random projectors:");
         for (int i = 0; i < 3; i++) {
