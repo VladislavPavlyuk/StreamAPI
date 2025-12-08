@@ -1,23 +1,22 @@
 package stream.models;
 
 import java.util.*;
-import java.util.Scanner;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 public class Foods {
-    private final List<FoodCategory> products;
+    private final List<Food> products;
     
-    public Foods(List<FoodCategory> products) {
+    public Foods(List<Food> products) {
         this.products = products;
     }
 
-    private void print(String header, Stream<FoodCategory> items) {
+    private void print(String header, Stream<Food> items) {
         System.out.println(header);
         
-        List<FoodCategory> itemsList = items.collect(Collectors.toList());
+        List<Food> itemsList = items.collect(Collectors.toList());
         if (itemsList.isEmpty()) {
-            System.out.println("Нет данных для отображения.");
+            System.out.println("No data to display.");
             return;
         }
         
@@ -35,10 +34,10 @@ public class Foods {
         String separator = "+" + "-".repeat(titleWidth + 2) + "+" + "-".repeat(categoryWidth + 2) + "+";
         
         System.out.println(separator);
-        System.out.printf(format, "Продукт", "Категория");
+        System.out.printf(format, "Product", "Category");
         System.out.println(separator);
         
-        for (FoodCategory item : itemsList) {
+        for (Food item : itemsList) {
             System.out.printf(format, item.getTitle(), item.getCategory());
         }
         
@@ -49,32 +48,31 @@ public class Foods {
         System.out.println(message);
     }
 
-    public void showAll() {        // Показать все продукты
-        print("Все продукты:", products.stream());
+    public void showAll() {        // Show all products
+        print("All products:", products.stream());
     }
 
-    public void showAll(String inputProduct) {        // Посчитать сколько раз встречается продукт
+    public void showAll(String inputProduct) {        // Count how many times a product appears
         long count = products.stream()
                 .filter(product -> product.getTitle().equalsIgnoreCase(inputProduct))
                 .count();
-        print("\n\nПродукт \"" + inputProduct + "\" встречается " + count + " раз.");
+        print("\n\nProduct \"" + inputProduct + "\" appears " + count + " times.");
     }
 
-    public void showAllLessThan(int n) {        // Показать все продукты с названием меньше пяти символов
-        print("\n\nПродукты с названием меньше " + n + " символов:",
+    public void showAllLessThan(int n) {        // Show all products with name shorter than specified number of characters
+        print("\n\nProducts with name shorter than " + n + " characters:",
                 products.stream()
                         .filter(product -> product.getTitle().length() < n));
     }
 
-    public void showAllStaredOn(char initial) {        // Показать все продукты, которые начинаются на заданную букву
-        print("\n\nПродукты, начинающиеся на букву \"" + initial + "\":",
+    public void showAllStaredOn(char initial) {        // Show all products that start with the specified letter
+        print("\n\nProducts starting with letter \"" + initial + "\":",
                 products.stream()
                         .filter(product -> product.getTitle().charAt(0) == initial));
     }
 
-    public void showAllfromCategory(String category){
-
-        print("\nПродукты из категории " + category + " : ",
+    public void showAllfromCategory(String category){        // Show all products from the specified category
+        print("\nProducts from category " + category + ":",
                 products.stream()
                         .filter(product -> product.getCategory().equalsIgnoreCase(category)));
     }

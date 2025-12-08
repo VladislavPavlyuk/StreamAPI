@@ -9,11 +9,7 @@ public class Devices {
     public Devices(List<Device> devices) {
         this.devices = devices;
     }
-    
-    /**
-     * Prints devices in table format
-     * @param deviceList list of devices to print
-     */
+
     private void print(List<Device> deviceList) {
         if (deviceList.isEmpty()) {
             System.out.println("No devices found.");

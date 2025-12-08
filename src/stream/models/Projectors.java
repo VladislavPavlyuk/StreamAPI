@@ -11,11 +11,6 @@ public class Projectors {
     public Projectors(List<Projector> projectors) {
         this.projectors = projectors;
     }
-    
-    /**
-     * Prints projectors in table format
-     * @param projectorList list of projectors to print
-     */
 
     private void printLine(int length){
         for (int i = 0; i < length; i++){

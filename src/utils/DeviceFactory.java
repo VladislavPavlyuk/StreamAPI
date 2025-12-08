@@ -6,6 +6,8 @@ import stream.models.Devices;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Random;
+import java.util.stream.Collectors;
+import java.util.stream.IntStream;
 
 public class DeviceFactory {
 
@@ -65,40 +67,20 @@ public class DeviceFactory {
             new Device("Asus VivoBook 15", 2021, 599.99, "Silver", "Laptop")
     );
 
-    /**
-     * Generates a list of random devices
-     * @param size number of devices to generate
-     * @return list of random devices
-     */
     public static List<Device> generateDevices(int size) {
-        List<Device> devices = new java.util.ArrayList<>();
-        for (int i = 0; i < size; i++) {
-            devices.add(deviceTemplates.get(random.nextInt(deviceTemplates.size())));
-        }
-        return devices;
+        return IntStream.range(0, size)
+                .mapToObj(i -> deviceTemplates.get(random.nextInt(deviceTemplates.size())))
+                .collect(Collectors.toList());
     }
-    
-    /**
-     * Creates a Devices instance with randomly generated devices
-     * @param size number of devices to generate
-     * @return Devices instance
-     */
+
     public static Devices createDevices(int size) {
         return new Devices(generateDevices(size));
     }
-    
-    /**
-     * Creates a Devices instance with 50 randomly generated devices
-     * @return Devices instance
-     */
+
     public static Devices createDevices() {
         return createDevices(50);
     }
 
-    /**
-     * Creates a random device from the templates
-     * @return random device
-     */
     public static Device createRandomDevice() {
         return deviceTemplates.get(random.nextInt(deviceTemplates.size()));
     }

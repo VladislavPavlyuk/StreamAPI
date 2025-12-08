@@ -1,37 +1,33 @@
 package utils;
 
 import stream.models.Foods;
-import stream.models.FoodCategory;
+import stream.models.Food;
 
 import java.util.*;
+import java.util.stream.Collectors;
 
 public class FoodFactory {
     
     private static final Map<String, List<String>> productsByCategory = new HashMap<>();
     
     static {
-        productsByCategory.put("Молочные", Arrays.asList("Молоко", "Кефир", "Творог", "Йогурт", "Сметана", "Сыр", "Масло"));
-        productsByCategory.put("Хлебобулочные", Arrays.asList("Хлеб", "Булочка", "Батон", "Багет", "Круассан", "Пирог", "Пончик"));
-        productsByCategory.put("Бакалея", Arrays.asList("Рис", "Гречка", "Макароны", "Овсянка", "Манка", "Перловка", "Сахар", "Соль", "Перец", "Мука", "Дрожжи"));
-        productsByCategory.put("Мясные", Arrays.asList("Мясо", "Колбаса", "Сосиски", "Ветчина", "Бекон", "Сало", "Пельмени"));
-        productsByCategory.put("Рыба", Arrays.asList("Рыба", "Креветки", "Кальмары", "Икра", "Краб", "Мидии", "Тунец"));
-        productsByCategory.put("Птица", Arrays.asList("Курица", "Индейка", "Утка", "Гусь", "Яйца"));
-        productsByCategory.put("Овощи", Arrays.asList("Картофель", "Морковь", "Лук", "Помидор", "Огурец", "Капуста", "Перец", "Баклажан", "Кабачок", "Тыква"));
-        productsByCategory.put("Фрукты", Arrays.asList("Яблоко", "Бананы", "Апельсины", "Груши", "Виноград", "Клубника", "Малина", "Черника", "Вишня", "Слива"));
-        productsByCategory.put("Консервы", Arrays.asList("Тушенка", "Рыбные консервы", "Овощные консервы", "Фруктовые консервы", "Сгущенка", "Паштет"));
-        productsByCategory.put("Сладости", Arrays.asList("Мед", "Орехи", "Изюм", "Чернослив", "Финики", "Инжир", "Шоколад", "Печенье", "Конфеты"));
-        productsByCategory.put("Напитки", Arrays.asList("Чай", "Кофе", "Сок", "Вода", "Лимонад", "Компот", "Квас", "Морс", "Газировка"));
+        productsByCategory.put("Dairy", Arrays.asList("Milk", "Kefir", "Cottage Cheese", "Yogurt", "Sour Cream", "Cheese", "Butter"));
+        productsByCategory.put("Bakery", Arrays.asList("Bread", "Bun", "Loaf", "Baguette", "Croissant", "Pie", "Donut"));
+        productsByCategory.put("Groceries", Arrays.asList("Rice", "Buckwheat", "Pasta", "Oatmeal", "Semolina", "Pearl Barley", "Sugar", "Salt", "Pepper", "Flour", "Yeast"));
+        productsByCategory.put("Meat", Arrays.asList("Meat", "Sausage", "Sausages", "Ham", "Bacon", "Lard", "Dumplings"));
+        productsByCategory.put("Fish", Arrays.asList("Fish", "Shrimp", "Squid", "Caviar", "Crab", "Mussels", "Tuna"));
+        productsByCategory.put("Poultry", Arrays.asList("Chicken", "Turkey", "Duck", "Goose", "Eggs"));
+        productsByCategory.put("Vegetables", Arrays.asList("Potato", "Carrot", "Onion", "Tomato", "Cucumber", "Cabbage", "Pepper", "Eggplant", "Zucchini", "Pumpkin"));
+        productsByCategory.put("Fruits", Arrays.asList("Apple", "Bananas", "Oranges", "Pears", "Grapes", "Strawberry", "Raspberry", "Blueberry", "Cherry", "Plum"));
+        productsByCategory.put("Canned", Arrays.asList("Stewed Meat", "Canned Fish", "Canned Vegetables", "Canned Fruits", "Condensed Milk", "Pate"));
+        productsByCategory.put("Sweets", Arrays.asList("Honey", "Nuts", "Raisins", "Prunes", "Dates", "Figs", "Chocolate", "Cookies", "Candy"));
+        productsByCategory.put("Beverages", Arrays.asList("Tea", "Coffee", "Juice", "Water", "Lemonade", "Compote", "Kvass", "Fruit Drink", "Soda"));
     }
     
     private static final Random random = new Random();
-    
-    /**
-     * Generates a list of random food items grouped by categories without duplicates
-     * @param size number of products to generate
-     * @return list of random food items
-     */
-    public static List<FoodCategory> generateProducts(int size) {
-        Set<FoodCategory> productsSet = new LinkedHashSet<>();
+
+    public static List<Food> generateProducts(int size) {
+        Set<Food> productsSet = new LinkedHashSet<>();
         List<String> categories = new ArrayList<>(productsByCategory.keySet());
         
         // Calculate total unique products available
@@ -42,58 +38,38 @@ public class FoodFactory {
         // Limit size to available unique products
         int actualSize = Math.min(size, totalUniqueProducts);
         
-        // Collect all unique products
-        List<FoodCategory> allUniqueProducts = new ArrayList<>();
-        for (String category : categories) {
-            List<String> categoryProducts = productsByCategory.get(category);
-            for (String productName : categoryProducts) {
-                allUniqueProducts.add(new FoodCategory(productName, category));
-            }
-        }
+        // Collect all unique products using Stream API
+        List<Food> allUniqueProducts = categories.stream()
+                .flatMap(category -> productsByCategory.get(category).stream()
+                        .map(productName -> new Food(productName, category)))
+                .collect(Collectors.toList());
         
         // Shuffle to randomize order
         Collections.shuffle(allUniqueProducts);
         
-        // Take first 'actualSize' unique products
-        for (int i = 0; i < actualSize && i < allUniqueProducts.size(); i++) {
-            productsSet.add(allUniqueProducts.get(i));
-        }
+        // Take first 'actualSize' unique products using Stream API
+        allUniqueProducts.stream()
+                .limit(actualSize)
+                .forEach(productsSet::add);
         
         return new ArrayList<>(productsSet);
     }
-    
-    /**
-     * Creates a Foods instance with randomly generated products
-     * @param size number of products to generate
-     * @return Foods instance
-     */
+
     public static Foods createFood(int size) {
         return new Foods(generateProducts(size));
     }
-    
-    /**
-     * Creates a Foods instance with 50 randomly generated products
-     * @return Foods instance
-     */
+
     public static Foods createFood() {
         return createFood(50);
     }
-    
-    /**
-     * Returns a random product name from all categories
-     * @return random product name
-     */
+
     public static String getRandomProduct() {
         List<String> allCategories = new ArrayList<>(productsByCategory.keySet());
         String randomCategory = allCategories.get(random.nextInt(allCategories.size()));
         List<String> categoryProducts = productsByCategory.get(randomCategory);
         return categoryProducts.get(random.nextInt(categoryProducts.size()));
     }
-    
-    /**
-     * Returns a random product name from all categories (non-static method)
-     * @return random product name
-     */
+
     public String createProduct() {
         return getRandomProduct();
     }

@@ -66,8 +66,5 @@ public class Device {
         return Objects.hash(name, year, price, color, type);
     }
 
-
-
-
 }
 
