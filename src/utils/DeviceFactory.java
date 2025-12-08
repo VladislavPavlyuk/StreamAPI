@@ -3,7 +3,7 @@ package utils;
 import stream.models.Device;
 import stream.models.Devices;
 
-import java.util.Arrays;
+import java.util.*;
 import java.util.List;
 import java.util.Random;
 
@@ -66,16 +66,24 @@ public class DeviceFactory {
     );
 
     /**
-     * Generates a list of random devices
+     * Generates a list of random devices without duplicates
      * @param size number of devices to generate
      * @return list of random devices
      */
     public static List<Device> generateDevices(int size) {
-        List<Device> devices = new java.util.ArrayList<>();
-        for (int i = 0; i < size; i++) {
-            devices.add(deviceTemplates.get(random.nextInt(deviceTemplates.size())));
+        Set<Device> devicesSet = new LinkedHashSet<>();
+        List<Device> shuffledTemplates = new ArrayList<>(deviceTemplates);
+        Collections.shuffle(shuffledTemplates);
+        
+        // Limit size to available unique devices
+        int actualSize = Math.min(size, deviceTemplates.size());
+        
+        // Add unique devices
+        for (int i = 0; i < actualSize && i < shuffledTemplates.size(); i++) {
+            devicesSet.add(shuffledTemplates.get(i));
         }
-        return devices;
+        
+        return new ArrayList<>(devicesSet);
     }
     
     /**

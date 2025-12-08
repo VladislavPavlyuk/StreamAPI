@@ -48,6 +48,23 @@ public class Device {
                 ", type='" + type + '\'' +
                 '}';
     }
+    
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Device device = (Device) o;
+        return year == device.year &&
+                Double.compare(device.price, price) == 0 &&
+                Objects.equals(name, device.name) &&
+                Objects.equals(color, device.color) &&
+                Objects.equals(type, device.type);
+    }
+    
+    @Override
+    public int hashCode() {
+        return Objects.hash(name, year, price, color, type);
+    }
 
 
 

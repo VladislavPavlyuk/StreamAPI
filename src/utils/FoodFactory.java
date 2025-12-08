@@ -1,6 +1,6 @@
 package utils;
 
-import stream.models.Food;
+import stream.models.Foods;
 import stream.models.FoodCategory;
 
 import java.util.*;
@@ -26,47 +26,56 @@ public class FoodFactory {
     private static final Random random = new Random();
     
     /**
-     * Generates a list of random food items grouped by categories
+     * Generates a list of random food items grouped by categories without duplicates
      * @param size number of products to generate
      * @return list of random food items
      */
     public static List<FoodCategory> generateProducts(int size) {
-        List<FoodCategory> products = new ArrayList<>();
+        Set<FoodCategory> productsSet = new LinkedHashSet<>();
         List<String> categories = new ArrayList<>(productsByCategory.keySet());
         
-        // Ensure products are distributed across categories
-        int productsPerCategory = size / categories.size();
-        int remainder = size % categories.size();
+        // Calculate total unique products available
+        int totalUniqueProducts = productsByCategory.values().stream()
+                .mapToInt(List::size)
+                .sum();
         
+        // Limit size to available unique products
+        int actualSize = Math.min(size, totalUniqueProducts);
+        
+        // Collect all unique products
+        List<FoodCategory> allUniqueProducts = new ArrayList<>();
         for (String category : categories) {
             List<String> categoryProducts = productsByCategory.get(category);
-            int count = productsPerCategory + (remainder-- > 0 ? 1 : 0);
-            
-            for (int i = 0; i < count && products.size() < size; i++) {
-                String productName = categoryProducts.get(random.nextInt(categoryProducts.size()));
-                products.add(new FoodCategory(productName, category));
+            for (String productName : categoryProducts) {
+                allUniqueProducts.add(new FoodCategory(productName, category));
             }
         }
         
         // Shuffle to randomize order
-        Collections.shuffle(products);
-        return products;
+        Collections.shuffle(allUniqueProducts);
+        
+        // Take first 'actualSize' unique products
+        for (int i = 0; i < actualSize && i < allUniqueProducts.size(); i++) {
+            productsSet.add(allUniqueProducts.get(i));
+        }
+        
+        return new ArrayList<>(productsSet);
     }
     
     /**
-     * Creates a Food instance with randomly generated products
+     * Creates a Foods instance with randomly generated products
      * @param size number of products to generate
-     * @return Food instance
+     * @return Foods instance
      */
-    public static Food createFood(int size) {
-        return new Food(generateProducts(size));
+    public static Foods createFood(int size) {
+        return new Foods(generateProducts(size));
     }
     
     /**
-     * Creates a Food instance with 50 randomly generated products
-     * @return Food instance
+     * Creates a Foods instance with 50 randomly generated products
+     * @return Foods instance
      */
-    public static Food createFood() {
+    public static Foods createFood() {
         return createFood(50);
     }
     

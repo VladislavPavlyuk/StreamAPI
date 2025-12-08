@@ -1,6 +1,6 @@
 
 import stream.models.Devices;
-import stream.models.Food;
+import stream.models.Foods;
 import stream.models.RandomNumbers;
 import utils.DeviceFactory;
 import utils.FoodFactory;
@@ -21,18 +21,19 @@ public class Main {
     }
     
     public static void main(String[] args) {
-
-        System.out.println("\n\nCreating RandomNumbers via factory:");
+/*
+        System.out.println("\n\nCreating Random Numbers via factory:");
         RandomNumbers testNumbers = RandomNumbersFactory.createRandomNumbers(50);
         testNumbers.print();
         waitForEnter();
-
-        System.out.println("\n\nCreating Food via factory:");
-        Food food = FoodFactory.createFood(50);
-        food.showAll();
-        food.showAllLessThan(5);
-        food.showAllStaredOn('Б');
-        food.showAll(" Молоко");
+*/
+        System.out.println("\n\nCreating Foods via factory:");
+        Foods foods = FoodFactory.createFood(50);
+        foods.showAll();
+        foods.showAllLessThan(5);
+        foods.showAll("Мясо");
+        foods.showAllStaredOn('Б');
+        foods.showAllfromCategory("Молочные");
         waitForEnter();
 /*
         System.out.println("\n\nCreating Devices via factory:");
